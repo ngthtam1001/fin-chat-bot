@@ -1,0 +1,5 @@
+doc_patterns:
+  10k: r"\b10k\b"
+  10q: r"\b10q\b"
+  earnings: r"earnings"
+  annual_report: r"annual.*report"

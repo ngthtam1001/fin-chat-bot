@@ -5,6 +5,9 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "paddleocr>=3.4.0",
+    "paddlepaddle>=3.3.0",
+    "python-doctr>=1.0.1",
     "qdrant-client>=1.17.1",
     "requests>=2.32.5",
 ]
