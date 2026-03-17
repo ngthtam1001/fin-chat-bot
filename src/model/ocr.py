@@ -6,9 +6,11 @@ from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 
-CONFIG_PATH = Path(__file__).resolve().parents[1] / "model_config.yml"
+CONFIG_PATH = Path(__file__).resolve().parent / "model_config.yml"
+
 with CONFIG_PATH.open("r", encoding="utf-8") as f:
     config = yaml.safe_load(f)
+
 DOC_PATTERNS: dict[str, str] = config.get("doc_patterns", {})
 
 
@@ -18,7 +20,7 @@ def metadata_extraction(
 ) -> dict[str | None]:
     
     # Company name extraction
-    file_name = Path(pdf_path).stem
+    file_name = Path(pdf_path).stem.lower()
     company_name = file_name.split("_")[0]
 
     # Date extraction
@@ -41,9 +43,9 @@ def metadata_extraction(
 
 def ocr_langchain(
     pdf_path: str,
-    chunk_size: int = 500,
-    chunk_overlap: int = 300,
-) -> tuple[list, dict]:
+    chunk_size: int = 800,
+    chunk_overlap: int = 500,
+):
     
     loader = PyPDFLoader(pdf_path)
     docs = loader.load()
@@ -54,6 +56,19 @@ def ocr_langchain(
     )
 
     chunks = splitter.split_documents(docs)
+    metadata = metadata_extraction(pdf_path)
 
-    return chunks, metadata_extraction(pdf_path=pdf_path)
+    for chunk in chunks:
+        chunk.metadata.update(metadata)
+    return chunks
 
+if __name__ == "__main__":
+
+    pdf_path = r"C:\Users\admin\Desktop\gic\data\pdfs\ADOBE_2022Q2_10Q.pdf"
+    chunks = ocr_langchain(pdf_path)
+
+    print(f"📄 Number of chunks: {len(chunks)}")
+    print(f"🧾 Metadata (sample): {chunks[0].metadata}")
+
+    print("\n🔎 Sample chunk:")
+    print(chunks[0].page_content[:500])
