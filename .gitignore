@@ -12,3 +12,7 @@ wheels/
 # Local config files 
 src/model/model_config.yml
 src/vector_db/qdrant_config.yml
+
+# Local configs (contain secrets)
+src/config/model_config.yml
+src/config/qdrant_config.yml
