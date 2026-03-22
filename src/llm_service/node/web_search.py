@@ -56,7 +56,7 @@ class TavilySearcher:
     def answer_with_tavily(
         self,
         query: str,
-        top_k: int = 5,
+        top_k: int = 20,
         topic: str = "finance",
         search_depth: str = "advanced",
     ) -> str:

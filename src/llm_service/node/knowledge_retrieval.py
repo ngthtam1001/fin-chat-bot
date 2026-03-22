@@ -137,7 +137,7 @@ class FinancialRAG:
         self,
         query: str,
         metadata: Optional[Dict[str, Any] | QueryMetadata] = None,
-        top_k: int = 5,
+        top_k: int = 20,
     ) -> Optional[List[Dict[str, Any]]]:
         query_vector = self.embed_query(query)
         q_filter = self.build_filter(metadata)
@@ -219,7 +219,7 @@ class FinancialRAG:
         self,
         query: str,
         metadata: Optional[Dict[str, Any] | QueryMetadata] = None,
-        top_k: int = 50,
+        top_k: int = 20,
     ) -> str:
         chunks = self.retrieve_context(
             query=query,

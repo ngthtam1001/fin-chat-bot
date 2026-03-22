@@ -35,6 +35,10 @@ Core principles:
 6. Do NOT introduce new assumptions, concepts, or metrics not present in the original question.
 7. If the question contains a defined formula, ratio, or condition, preserve it exactly.
 8. If the question asks whether a metric is useful, include the necessary intermediate step(s) to evaluate that, not just retrieve the metric.
+9. If the question involves any derived quantity (e.g., average, change, growth, ratio, margin, or any value defined by a formula), you MUST decompose it into its underlying components.
+    - Determine whether each required value can be directly retrieved from financial statements.
+    - If a value is NOT directly retrievable, break it down into the minimum set of base variables needed to compute it.
+    - Continue decomposing recursively until all variables correspond to directly retrievable financial line items (e.g., revenue, PP&E, liabilities, etc.).
 
 When decomposition / planning is needed, think in terms of reasoning steps such as:
 - retrieve a required fact

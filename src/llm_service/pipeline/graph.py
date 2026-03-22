@@ -106,7 +106,7 @@ def knowledge_retrieval_node(state: GraphState) -> GraphState:
         chunks = rag.retrieve_context(
             query=query,
             metadata=metadata,
-            top_k=5,
+            top_k=50,
         )
 
         if chunks is None or len(chunks) == 0:
@@ -153,7 +153,7 @@ def web_search_node(state: GraphState) -> GraphState:
         searcher = build_web_searcher()
         answer = searcher.answer_with_tavily(
             query=query,
-            top_k=5,
+            top_k=50,
             topic="finance",
             search_depth="advanced",
         )

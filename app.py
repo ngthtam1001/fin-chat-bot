@@ -1,6 +1,6 @@
 import streamlit as st
 
-from src.llm_service.pipeline.graph import FinancialAgent
+from src.llm_service.pipeline.reasoning_graph import MultiStepFinancialAgent
 
 
 st.set_page_config(
@@ -10,12 +10,12 @@ st.set_page_config(
 )
 
 st.title("📈 Financial QA Agent")
-st.write("Ask a finance question and send it to the FinancialAgent.")
+st.write("Ask a finance question and send it to the MultiStepFinancialAgent.")
 
 # Initialize the agent once (avoid reloading on every interaction)
 @st.cache_resource
 def get_agent():
-    return FinancialAgent()
+    return MultiStepFinancialAgent()
 
 agent = get_agent()
 
@@ -55,12 +55,15 @@ if ask_clicked:
                     "route": result.get("route"),
                     "source": result.get("source"),
                     "error": result.get("error"),
+                    # Multi-step agent debug fields
+                    "translated_questions": result.get("translated_questions"),
+                    "step_results": result.get("step_results"),
                 }
 
                 st.session_state.history.insert(0, record)
 
             except Exception as e:
-                st.error(f"Failed to call FinancialAgent: {str(e)}")
+                st.error(f"Failed to call MultiStepFinancialAgent: {str(e)}")
 
 # Show latest result
 if st.session_state.history:
@@ -79,6 +82,25 @@ if st.session_state.history:
 
     st.markdown("**Answer:**")
     st.write(latest["answer"])
+
+    # --- Step results (MultiStepFinancialAgent) ---
+    translated = latest.get("translated_questions") or []
+    steps = latest.get("step_results") or []
+    if translated and steps:
+        st.subheader("Step Results")
+
+        st.markdown("**Decomposed questions:**")
+        for i, q in enumerate(translated, 1):
+            st.write(f"{i}. {q}")
+
+        for i, (q, step) in enumerate(zip(translated, steps), 1):
+            with st.expander(f"Step {i}: {q}"):
+                st.markdown(f"**Route:** {step.get('route')}")
+                st.markdown(f"**Source:** {step.get('source')}")
+                if step.get("error"):
+                    st.error(step.get("error"))
+                st.markdown("**Answer:**")
+                st.write(step.get("answer") or "")
 
     st.divider()
 
