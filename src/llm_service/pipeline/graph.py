@@ -45,7 +45,8 @@ def build_rag() -> FinancialRAG:
         raise RuntimeError("Missing Gemini API key in settings (settings.gemini_api_key).")
 
     qdrant_url = settings.qdrant.url
-    collection_name = settings.qdrant.default_collection
+    # collection_name = settings.qdrant.default_collection
+    collection_name = "new_ocr"
     embed_model = settings.model.embedding_model.gemini.default
     llm_model = settings.model.llm_model.gemini.flash
 
@@ -106,7 +107,7 @@ def knowledge_retrieval_node(state: GraphState) -> GraphState:
         chunks = rag.retrieve_context(
             query=query,
             metadata=metadata,
-            top_k=50,
+            top_k=20,
         )
 
         if chunks is None or len(chunks) == 0:
@@ -153,7 +154,7 @@ def web_search_node(state: GraphState) -> GraphState:
         searcher = build_web_searcher()
         answer = searcher.answer_with_tavily(
             query=query,
-            top_k=50,
+            top_k=10,
             topic="finance",
             search_depth="advanced",
         )

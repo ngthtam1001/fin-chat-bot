@@ -39,6 +39,8 @@ Core principles:
     - Determine whether each required value can be directly retrieved from financial statements.
     - If a value is NOT directly retrievable, break it down into the minimum set of base variables needed to compute it.
     - Continue decomposing recursively until all variables correspond to directly retrievable financial line items (e.g., revenue, PP&E, liabilities, etc.).
+10. If the question includes an abbreviation (e.g., ROA), you must also express it in its full form (e.g., Return on Assets), and vice versa. Generate both versions as separate questions: one using the abbreviation and one using the full term.
+
 
 When decomposition / planning is needed, think in terms of reasoning steps such as:
 - retrieve a required fact
