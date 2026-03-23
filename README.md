@@ -101,3 +101,7 @@ Fix by setting `src/config/qdrant_config.yml`:
 
 Retrieval requires metadata filters (company + year/report_type). If metadata extraction isn’t confident, the graph may route to web search instead.
 
+## Documentation
+
+Please refer to this link to fully understand the system design https://docs.google.com/document/d/1mlFIJj-WAQoKYQTpwIthb6dxWfY2T9tdEQ595L0vtmQ/edit?usp=sharing
+
